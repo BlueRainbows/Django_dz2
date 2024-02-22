@@ -20,7 +20,9 @@
                         {{ object.description_products }}
                     </ul>
                     <div class="d-grid gap-2 col-6 mx-auto">
-                        <button class="btn btn-success" type="button">Купить</button>
+                        <div class="btn-group">
+                          <a href="{% url 'catalog:product' object.pk %}" class="btn btn-success active" aria-current="page">Купить</a>
+                        </div>
                     </div>
                 </div>
             </div>
