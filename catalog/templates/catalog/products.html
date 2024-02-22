@@ -1,0 +1,25 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+{% load static %}
+{% load tags_and_filter %}
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Skystore</h1>
+</div>
+
+<div class="container">
+    <div class="row text-center">
+        <div class="col-12">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <img class="img-thumbnail" src="{{ object.image|mymedia }}">
+                    <h1 class="card-title pricing-card-title">{{ object.name_products }}</h1>
+                    <ul class="list-unstyled mt-3 mb-4 text-title m-3">
+                        <li>{{ object.description_products }}</li>
+                    </ul>
+                    <button type="button" class="btn btn-lg btn-block btn-outline-success">Купить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
