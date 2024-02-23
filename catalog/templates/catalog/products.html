@@ -1,10 +1,8 @@
 {% extends 'catalog/base.html' %}
 {% block content %}
-{% load static %}
 {% load tags_and_filter %}
 
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">Skystore</h1>
+{% include 'catalog/include/inc_text_skystore.html' %}
 </div>
 
 <div class="container">
@@ -15,7 +13,9 @@
                     <img class="img-thumbnail" src="{{ object.image|mymedia }}">
                     <h1 class="card-title pricing-card-title">{{ object.name_products }}</h1>
                     <ul class="list-unstyled mt-3 mb-4 text-title m-3">
-                        <li>{{ object.description_products }}</li>
+                        <li><strong>Категория: </strong>{{ object.category }}</li>
+                        <li><strong>Описание: </strong>{{ object.description_products }}</li>
+                        <li><strong>Цена: </strong>{{ object.price }} рублей </li>
                     </ul>
                     <button type="button" class="btn btn-lg btn-block btn-outline-success">Купить</button>
                 </div>
