@@ -1,0 +1,31 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+{% load tags_and_filter %}
+<div class="container">
+    <div class="row text-center">
+        <div class="col-12">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <img class="img-thumbnail" style="max-width: 30%" src="{{ object.image | mymedia }}">
+                    <h1 class="card-title pricing-card-title">{{ object.head }}</h1>
+                    <ul class="list-unstyled mt-3 mb-4 text-title m-3">
+                        <li><strong>Дата создания: </strong>{{ object.created_at }} </li>
+                        <li><strong>Метка: </strong>{{ object.slug }}</li>
+                        <li><strong>Содержимое: </strong>{{ object.content }}</li>
+                        <li><strong>Просмотры: </strong>{{ object.views }} </li>
+                    </ul>
+                    {% if object.published %}
+                        <figcaption class="blockquote-footer">
+                            Статус статьи - <cite title="Source Title">Статья опубликована</cite>
+                        </figcaption>
+                    {% else %}
+                        <figcaption class="blockquote-footer">
+                            Статус статьи - <cite title="Source Title">Статья не опубликована</cite>
+                        </figcaption>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
