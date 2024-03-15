@@ -23,6 +23,7 @@ class ProductListView(ListView):
             active_version = version.filter(current_version=True).first()
             product.active_version = active_version.version_name if active_version else 'Нет активной версии'
             product.number_version = active_version.version_number if active_version else ''
+            product.current_versions = active_version.current_version if active_version else False
 
         context_data['products'] = products
 

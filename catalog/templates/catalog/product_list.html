@@ -27,7 +27,11 @@
                 <h1 class="card-title text-center">{{ object.price }} рублей </h1>
                 <ul class="list-unstyled text-center">
                     <li>{{ object.description_products|truncatechars:100 }}</li>
-                    <li>{{ object.active_version }}, {{ object.number_version }}</li>
+                    {% if object.current_versions %}
+                        <li>{{ object.active_version }}, {{ object.number_version }}</li>
+                    {% else %}
+                        <li>{{ object.active_version }}</li>
+                    {% endif %}
                 </ul>
 
                 <div class="d-grid gap-2 col-6 mx-auto">
