@@ -7,7 +7,7 @@
                   <div class="text-bg mb-5 mt-4">
                       <h3 class="card-title">Здесь вы можете создать новый блог</h3>
                   </div>
-                <a href="{% url 'catalog:create' %}" class="btn btn-dark" >Создать новый блог</a>
+                <a href="{% url 'blog:create' %}" class="btn btn-dark" >Создать новый блог</a>
               </div>
         </div>
     </div>
@@ -24,18 +24,18 @@
                     </ul>
                     <div class="d-grid gap-2 col-3 mx-auto">
                         <div class="btn-group">
-                            <a href="{% url 'catalog:detail' object.pk %}" class="btn btn-success active" aria-current="page">Прочесть блог</a>
+                            <a href="{% url 'blog:detail' object.pk %}" class="btn btn-success active" aria-current="page">Прочесть блог</a>
                         </div>
                         <div class="btn-group">
-                            <a href="{% url 'catalog:update' object.pk %}" class="btn btn-warning active" aria-current="page">Редактировать</a>
+                            <a href="{% url 'blog:update' object.pk %}" class="btn btn-warning active" aria-current="page">Редактировать</a>
                         </div>
                         <div class="btn-group">
-                            <a href="{% url 'catalog:delete' object.pk %}" class="btn btn-danger active" aria-current="page">Удалить</a>
+                            <a href="{% url 'blog:delete' object.pk %}" class="btn btn-danger active" aria-current="page">Удалить</a>
                         </div>
                         {% if object.published %}
-                            <a href="{% url 'catalog:activate' object.pk %}" class="btn btn-secondary active" aria-current="page">Деактивировать</a>
+                            <a href="{% url 'blog:activate' object.pk %}" class="btn btn-secondary active" aria-current="page">Деактивировать</a>
                         {% else %}
-                            <a href="{% url 'catalog:activate' object.pk %}" class="btn btn-secondary active" aria-current="page">Активировать</a>
+                            <a href="{% url 'blog:activate' object.pk %}" class="btn btn-secondary active" aria-current="page">Активировать</a>
                         {% endif %}
                     </div>
                 </div>

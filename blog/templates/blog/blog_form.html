@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row text-center">
         <div class="col-12">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
                     <button type="submit" class="btn btn-success active">
@@ -14,7 +14,7 @@
                         {% endif %}
                     </button>
                 <div class="btn-group">
-                    <a href="{% url 'catalog:list' %}" class="btn btn-danger active" aria-current="page"> Отмена </a>
+                    <a href="{% url 'blog:list' %}" class="btn btn-danger active" aria-current="page"> Отмена </a>
                 </div>
             </form>
         </div>

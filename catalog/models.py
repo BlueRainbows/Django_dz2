@@ -19,10 +19,10 @@ class Product(models.Model):
     name_products = models.CharField(max_length=100, verbose_name='Наименование продукта')
     description_products = models.CharField(max_length=300, verbose_name='Описание продукта')
     image = models.ImageField(upload_to='products/', verbose_name='Изображение', **NULLABLE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория продукта')
     price = models.IntegerField(verbose_name='Цена продукта')
-    created_at = models.DateTimeField(verbose_name='Дата создания', **NULLABLE)
-    updated_at = models.DateTimeField(verbose_name='Дата изменения', **NULLABLE)
+    created_at = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
+    updated_at = models.DateTimeField(verbose_name='Дата изменения', auto_now=True)
 
     def __str__(self):
         return f'{self.name_products}: {self.description_products}. Цена - {self.price}'
@@ -32,18 +32,15 @@ class Product(models.Model):
         verbose_name_plural = 'Продукты'
 
 
-class Blog(models.Model):
-    head = models.CharField(max_length=300, verbose_name='Заголовок')
-    slug = models.CharField(max_length=300, verbose_name='Slug', **NULLABLE)
-    content = models.TextField(verbose_name='Содержимое')
-    image = models.ImageField(upload_to='blogs/', verbose_name='Изображение', **NULLABLE)
-    created_at = models.DateField(verbose_name='Дата создания', auto_now=True)
-    published = models.BooleanField(verbose_name='Публикация', default=False)
-    views = models.IntegerField(verbose_name='Просмотры', default=0)
+class Version(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Продукт')
+    version_number = models.PositiveSmallIntegerField(verbose_name='Номер версии продукта')
+    version_name = models.CharField(max_length=150, verbose_name='Название версии продукта')
+    current_version = models.BooleanField(default=True, verbose_name='Признак текущей версии')
 
     def __str__(self):
-        return f'{self.head}. Дата создания - {self.created_at}'
+        return f'{self.product}. Название версии: {self.version_name}, номер {self.version_number}.'
 
     class Meta:
-        verbose_name = 'Блог'
-        verbose_name_plural = 'Блоги'
+        verbose_name = 'Версия'
+        verbose_name_plural = 'Версии'
