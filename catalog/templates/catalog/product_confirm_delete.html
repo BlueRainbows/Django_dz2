@@ -1,0 +1,18 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row text-center">
+        <div class="col-12">
+            <form method="post">
+            {% csrf_token %}
+                <p> Хотите удалить продукт "{{ object.name_products }}"? </p>
+                <button type="submit" class="btn btn-success active">
+                    Удалить
+                </button>
+                <div class="btn-group">
+                    <a href="{% url 'catalog:product_list' %}" class="btn btn-danger active" aria-current="page"> Отмена </a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock%}

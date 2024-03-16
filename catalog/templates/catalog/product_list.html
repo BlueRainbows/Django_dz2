@@ -43,6 +43,10 @@
                         <a href="{% url 'catalog:update_product' object.pk %}" class="btn btn-secondary active"
                            aria-current="page">Редактировать</a>
                     </div>
+                    <div class="btn-group">
+                        <a href="{% url 'catalog:delete_product' object.pk %}" class="btn btn-danger active"
+                           aria-current="page">Удалить</a>
+                    </div>
                 </div>
             </div>
         </div>
