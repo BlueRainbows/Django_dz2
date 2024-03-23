@@ -1,20 +1,15 @@
 import random
 
-from django.contrib.auth.views import PasswordResetView
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth import login, get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
-from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail, EmailMessage
-from django.http import request, HttpResponse
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse_lazy, reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.views import View
 from django.views.generic import CreateView, UpdateView, TemplateView
 
 from users.forms import UserRegisterForm, UserProfileForm
@@ -81,33 +76,6 @@ class ProfileView(UpdateView):
         return self.request.user
 
 
-# class ResetPassword(TemplateView):
-#     model = User
-#     form_class = UserPasswordResetForm
-#     template_name = 'users/password_reset_form.html'
-#     success_url = reverse_lazy('users:password_reset_complete')
-#
-#     def form_valid(self, form):
-#
-#         user = form.save()
-#         print(user)
-#         email = user['email']
-#         user = User.objects.get(email=email)
-#         new_password = ''.join([str(random.randint(0, 9)) for _ in range(10)])
-#         send_mail(
-#             subject='Восстановление пароля',
-#             message=f'Ваш пароль изменен на: {new_password}',
-#             from_email=settings.EMAIL_HOST_USER,
-#             recipient_list=[user.email],
-#             fail_silently=False,
-#         )
-#         user.password = new_password
-#         user.save()
-#         return super().form_valid(form)
-#
-#     def form_invalid(self, form):
-#         form = UserRegisterForm()
-#         return super().form_invalid(form)
 def reset_password(request):
     if request.method == 'POST':
         email = request.POST['email']
