@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
 NULLABLE = {'blank': True, 'null': True}
@@ -23,6 +24,8 @@ class Product(models.Model):
     price = models.IntegerField(verbose_name='Цена продукта')
     created_at = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
     updated_at = models.DateTimeField(verbose_name='Дата изменения', auto_now=True)
+
+    user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, verbose_name='Владелец', **NULLABLE, default=None)
 
     def __str__(self):
         return f'{self.name_products}: {self.description_products}. Цена - {self.price}'

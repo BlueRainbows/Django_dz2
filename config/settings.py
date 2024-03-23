@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'catalog',
     'blog',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -131,5 +132,34 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# Определение корневой директории и урла для медиа файлов
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+# Автопереход урла при входе/выводе на корневой, определение модели для пользователя
+
+AUTH_USER_MODEL = 'users.User'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = 'users:login'
+
+
+# Настройки подключения к почтовым рассылкам
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+# EMAIL_PORT = 587
+EMAIL_USE_SSL = True
+# EMAIL_USE_TLS = True
+
+
+EMAIL_HOST_USER = 'BlueberryRainbows@yandex.ru' ### Почта с которой приизводиться рассылка
+EMAIL_HOST_PASSWORD = 'fxzxxvkijpyjbozb' ### Сгенирированный пароль
+
+
+EMAIL_SERVER = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER

@@ -27,6 +27,12 @@
                 <h1 class="card-title text-center">{{ object.price }} рублей </h1>
                 <ul class="list-unstyled text-center">
                     <li>{{ object.description_products|truncatechars:100 }}</li>
+                    <li><strong>Владелец:</strong>
+                    {% if object.user.email %}
+                        <li>{{ object.user.email}}</li>
+                    {% else %}
+                        <li>неизвестен</li>
+                    {% endif %}
                     {% if object.current_versions %}
                         <li>{{ object.active_version }}, {{ object.number_version }}</li>
                     {% else %}
