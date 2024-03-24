@@ -52,7 +52,7 @@ class RegisterView(CreateView):
 
 
 def activate(request, uidb64, token):
-    User = get_user_model()
+    User = get_user_model() # User
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
