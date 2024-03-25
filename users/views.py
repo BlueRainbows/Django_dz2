@@ -1,5 +1,5 @@
 import random
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth import login, get_user_model
 from django.conf import settings
@@ -66,7 +66,7 @@ def activate(request, uidb64, token):
         return redirect(reverse('users:error_activate'))
 
 
-class ProfileView(UpdateView):
+class ProfileView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserProfileForm
     template_name = 'users/profile.html'
