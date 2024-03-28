@@ -9,6 +9,7 @@ class Command(BaseCommand):
             email='BlueberryRainbows@yandex.ru',
             first_name='admin',
             last_name='BlueRain',
+            country='Pocсия',
             is_staff=True,
             is_superuser=True
         )

@@ -1,6 +1,7 @@
 {% extends 'catalog/base.html' %}
 {% block content %}
 <div class="container">
+    {% if perms.blog.add_blog %}
     <div class="card text-bg mb-5 mt-5">
         <div class="card text-center">
               <div class="card-body">
@@ -11,6 +12,7 @@
               </div>
         </div>
     </div>
+    {% endif %}
     {% for object in object_list %}
     <div class="col-12">
             <div class="card mb-4 mt-4 box-shadow">
@@ -18,7 +20,7 @@
                     <h4 class="text-center">{{ object.head }}</h4>
                 </div>
                 <div class="card-body">
-                    <h2 class="card-title text-center">{{ object.created_at }}</h2>
+                    <h2 class="card-title text-center"> Дата создания: {{ object.created_at }}</h2>
                     <ul class="list-unstyled text-center">
                         {{ object.content|truncatechars:100 }}
                     </ul>
@@ -26,16 +28,22 @@
                         <div class="btn-group">
                             <a href="{% url 'blog:detail' object.pk %}" class="btn btn-success active" aria-current="page">Прочесть блог</a>
                         </div>
-                        <div class="btn-group">
-                            <a href="{% url 'blog:update' object.pk %}" class="btn btn-warning active" aria-current="page">Редактировать</a>
-                        </div>
-                        <div class="btn-group">
-                            <a href="{% url 'blog:delete' object.pk %}" class="btn btn-danger active" aria-current="page">Удалить</a>
-                        </div>
-                        {% if object.published %}
-                            <a href="{% url 'blog:activate' object.pk %}" class="btn btn-secondary active" aria-current="page">Деактивировать</a>
-                        {% else %}
-                            <a href="{% url 'blog:activate' object.pk %}" class="btn btn-secondary active" aria-current="page">Активировать</a>
+                        {% if perms.blog.change_blog %}
+                            <div class="btn-group">
+                                <a href="{% url 'blog:update' object.pk %}" class="btn btn-warning active" aria-current="page">Редактировать</a>
+                            </div>
+                        {% endif %}
+                        {% if perms.blog.delete_blog %}
+                            <div class="btn-group">
+                                <a href="{% url 'blog:delete' object.pk %}" class="btn btn-danger active" aria-current="page">Удалить</a>
+                            </div>
+                        {% endif %}
+                        {% if perms.blog.change_blog %}
+                            {% if object.published %}
+                                <a href="{% url 'blog:activate' object.pk %}" class="btn btn-secondary active" aria-current="page">Деактивировать</a>
+                            {% else %}
+                                <a href="{% url 'blog:activate' object.pk %}" class="btn btn-secondary active" aria-current="page">Активировать</a>
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>

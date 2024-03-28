@@ -12,13 +12,30 @@ class StyleFormsMixin:
                 field.widget.attrs.update({'class': 'form-check-input'})
 
 
-class ProductForm(StyleFormsMixin, forms.ModelForm):
+class ProductForm1(StyleFormsMixin, forms.ModelForm):
 
     words = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
 
     class Meta:
         model = Product
-        fields = ('name_products', 'description_products', 'image', 'price', 'category',)
+        fields = ('description_products', 'category', 'is_published')
+
+    def clean_description_products(self):
+        cleaned_data = self.cleaned_data['description_products']
+
+        for word in self.words:
+            if word.lower() in cleaned_data.lower():
+                raise forms.ValidationError('Описание не должно содержать слово' + word)
+        return cleaned_data
+
+
+class ProductForm2(StyleFormsMixin, forms.ModelForm):
+
+    words = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
+
+    class Meta:
+        model = Product
+        fields = ('name_products', 'description_products', 'image', 'price', 'category', 'is_published')
 
     def clean_name_products(self):
         cleaned_data = self.cleaned_data['name_products']

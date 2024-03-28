@@ -32,7 +32,12 @@
                             {% if user.is_authenticated %}
                                 <img src="{{ user.avatar|mymedia }}" alt="" width="32" height="32" class="rounded-circle me-2">
                             {% endif %}
-                            <strong>Пользователь</strong>
+                            {% if user.is_authenticated %}
+                                <strong>Пользователь {{ user.email }}</strong>
+                            {% else %}
+                                <strong>Пользователь</strong>
+                            {% endif %}
+
                         </a>
 
 
