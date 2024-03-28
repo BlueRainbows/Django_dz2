@@ -5,6 +5,7 @@ from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
+from django.views import View
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 
 from catalog.forms import VersionForm, ProductForm2, ProductForm1
@@ -66,18 +67,33 @@ class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
         return super().form_valid(form)
 
 
-class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class CustomPermissionMixin(View):
+
+    @property
+    def get_permission_required(self):
+        if self.request.user.is_staff:
+            per = ('catalog.change_product', 'catalog.set_published',
+            'catalog.set_description', 'catalog.set_category')
+            return per
+        if self.request.user.is_active and not self.request.user.is_staff and not self.request.user.is_superuser:
+            per = 'catalog.change_product'
+            return per
+
+
+class ProductUpdateView(LoginRequiredMixin,  PermissionRequiredMixin, CustomPermissionMixin,UpdateView):
     model = Product
-    form_class = ProductForm1
+    form_class = ProductForm2
     success_url = reverse_lazy('catalog:product_list')
-    permission_required = (
-    'catalog.change_product', 'catalog.set_published',
-    'catalog.set_description', 'catalog.set_category')
+    permission_required = CustomPermissionMixin.get_permission_required
 
     def get_form_class(self):
-        if self.request.user.has_perms(perm_list=self.permission_required) and not self.request.user.is_superuser:
-            return ProductForm1
-        return ProductForm2
+        if len(self.permission_required) == 4:
+            if self.request.user.has_perms(perm_list=self.permission_required) and not self.request.user.is_superuser:
+                return ProductForm1
+            else:
+                return ProductForm2
+        else:
+            return ProductForm2
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context_data = super().get_context_data(**kwargs)
