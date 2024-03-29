@@ -7,7 +7,6 @@
 
 
 <div class="container">
-    {% if perms.catalog.add_product %}
     <div class="col-12">
         <div class="card-body">
             <h1 class="card-title text-center mb-4"> Здесь вы можете добавить свой продукт </h1>
@@ -18,7 +17,6 @@
             </div>
         </div>
     </div>
-    {% endif %}
     {% for object in products %}
     <div class="col-12">
         <div class="card mb-4 mt-4 box-shadow">
@@ -61,7 +59,7 @@
                             {% endif %}
                         {% endif %}
                         {% if user.is_active %}
-                            {% if perms.catalog.change_product %}
+
                                 {% if user.email == object.user.email %}
                                     <div class="btn-group">
                                         <a href="{% url 'catalog:update_product' object.pk %}" class="btn btn-secondary active"
@@ -69,7 +67,7 @@
                                     </div>
                                 {% endif %}
                             {% endif %}
-                        {% endif %}
+
                     {% endif %}
                     {% if perms.catalog.delete_product %}
                     <div class="btn-group">

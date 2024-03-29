@@ -1,24 +1,19 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
-from django.shortcuts import render
-from django.urls import reverse_lazy, reverse
-from django.views import View
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 
-from catalog.forms import VersionForm, ProductForm2, ProductForm1
-from catalog.models import Product, Version, Category
+from catalog.forms import VersionForm, ProductFormForModerCatalog, ProductFormForAllUser
+from catalog.models import Product, Version
 
 
 class ContactsView(TemplateView):
     template_name = 'catalog/contacts.html'
 
 
-class ProductListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class ProductListView(LoginRequiredMixin, ListView):
     model = Product
-    permission_required = 'catalog.view_product'
 
     def get_context_data(self, *args, **kwargs):
         context_data = super().get_context_data(*args, **kwargs)
@@ -40,11 +35,10 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
 
 
-class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class ProductCreateView(PermissionRequiredMixin, CreateView):
     model = Product
-    form_class = ProductForm2
+    form_class = ProductFormForAllUser
     success_url = reverse_lazy('catalog:product_list')
-    permission_required = 'catalog.add_product'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -67,33 +61,22 @@ class ProductCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView)
         return super().form_valid(form)
 
 
-class CustomPermissionMixin(View):
-
-    @property
-    def get_permission_required(self):
-        if self.request.user.is_staff:
-            per = ('catalog.change_product', 'catalog.set_published',
-            'catalog.set_description', 'catalog.set_category')
-            return per
-        if self.request.user.is_active and not self.request.user.is_staff and not self.request.user.is_superuser:
-            per = 'catalog.change_product'
-            return per
-
-
-class ProductUpdateView(LoginRequiredMixin,  PermissionRequiredMixin, CustomPermissionMixin,UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
-    form_class = ProductForm2
+    form_class = ProductFormForAllUser
     success_url = reverse_lazy('catalog:product_list')
-    permission_required = CustomPermissionMixin.get_permission_required
+    permission_required = ('catalog.change_product', 'catalog.set_published',
+                           'catalog.set_description', 'catalog.set_category')
 
     def get_form_class(self):
-        if len(self.permission_required) == 4:
-            if self.request.user.has_perms(perm_list=self.permission_required) and not self.request.user.is_superuser:
-                return ProductForm1
-            else:
-                return ProductForm2
+        if self.request.user.is_staff and self.request.user.has_perms(perm_list=self.permission_required) and not self.request.user.is_superuser:
+            return ProductFormForModerCatalog
+        elif self.request.user.is_superuser and self.request.user.has_perm('catalog.change_product'):
+            return ProductFormForAllUser
         else:
-            return ProductForm2
+            if self.request.user != self.get_object().user:
+                raise PermissionDenied
+            return ProductFormForAllUser
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context_data = super().get_context_data(**kwargs)

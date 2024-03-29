@@ -7,9 +7,9 @@ from blog.models import Blog
 from catalog.models import Product, Version, Category
 
 ct_pr = ContentType.objects.get_for_model(Product)
-ct_bl = ContentType.objects.get_for_model(Blog)
-ct_vers = ContentType.objects.get_for_model(Version)
-ct_cat = ContentType.objects.get_for_model(Category)
+# ct_bl = ContentType.objects.get_for_model(Blog)
+# ct_vers = ContentType.objects.get_for_model(Version)
+# ct_cat = ContentType.objects.get_for_model(Category)
 
 # Поиск по коднейму в бд
 # perm = [
@@ -26,11 +26,7 @@ ct_cat = ContentType.objects.get_for_model(Category)
 
 # Поиск по айди в бд
 perm = [
-    {'id': 24, 'content_type': ct_cat},
     {'id': 26, 'content_type': ct_pr},
-    {'id': 28, 'content_type': ct_pr},
-    {'id': 32, 'content_type': ct_vers},
-    {'id': 36, 'content_type': ct_bl},
     {'id': 41, 'content_type': ct_pr},
     {'id': 42, 'content_type': ct_pr},
     {'id': 43, 'content_type': ct_pr},

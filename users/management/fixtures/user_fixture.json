@@ -1,0 +1,86 @@
+[
+{
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$720000$BLQJe8MPp8HYs0dzmH6d8a$0eg/5U8lH3EmzVafj1hYG2rniCWNCXnJInYycEFbJUk=",
+        "last_login": "2024-03-29T16:49:05.862Z",
+        "is_superuser": true,
+        "first_name": "admin",
+        "last_name": "BlueRain",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-03-27T10:00:26.197Z",
+        "email": "BlueberryRainbows@yandex.ru",
+        "phone": null,
+        "avatar": "/users/796d02684eadafba407faf81a4fd697d.png",
+        "country": "",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$720000$CELe7T0aIX48ecng53sSZa$AIJide3e4Xxt3gpvK1mDHwWPkA/NtKk5HsBpxWlbjZY=",
+        "last_login": "2024-03-29T16:46:08.732Z",
+        "is_superuser": false,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-03-27T10:07:00Z",
+        "email": "Blyereinbow@yandex.ru",
+        "phone": null,
+        "avatar": "/users/796d02684eadafba407faf81a4fd697d.png",
+        "country": "Россия",
+        "groups": [
+            14
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$720000$AWIqUxT5JxuJIiQcqEwRkn$UtdV+UueDCIp6AHZ7ENChYCZQS0l/2N1UC/8EcJ7UtY=",
+        "last_login": "2024-03-29T16:52:06.348Z",
+        "is_superuser": false,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-03-27T11:03:25Z",
+        "email": "blusrains@gmail.com",
+        "phone": null,
+        "avatar": "/users/796d02684eadafba407faf81a4fd697d.png",
+        "country": "Россия",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$720000$OP8GKnniJEFAsMpIIiEtZy$f2UYSOtwXAwqemyLaquyhY4HhJ4jlW5voOSBBdiz2KM=",
+        "last_login": "2024-03-29T16:51:36.164Z",
+        "is_superuser": false,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-03-29T13:06:09Z",
+        "email": "admin@adminow.ru",
+        "phone": null,
+        "avatar": "/users/796d02684eadafba407faf81a4fd697d.png",
+        "country": "Россия",
+        "groups": [
+            3
+        ],
+        "user_permissions": []
+    }
+}
+]
