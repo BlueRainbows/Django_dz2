@@ -38,6 +38,7 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
 class ProductCreateView(CreateView):
     model = Product
     form_class = ProductFormForAllUser
+    success_url = reverse_lazy('catalog:product_list')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context_data = super().get_context_data(**kwargs)
