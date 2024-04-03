@@ -19,62 +19,69 @@
     </div>
     {% for object in products %}
     <div class="col-12">
-        <div class="card mb-4 mt-4 box-shadow">
-            <div class="card-header">
-                <h4 class="text-center">{{ object.name_products }}</h4>
-            </div>
-            <div class="card-body">
-                <h1 class="card-title text-center">{{ object.price }} рублей </h1>
-                <ul class="list-unstyled text-center">
-                    <li>{{ object.description_products|truncatechars:100 }}</li>
-                    {% if object.user.email %}
-                        <li><strong>Владелец:</strong>{{ object.user.email}}</li>
-                    {% else %}
-                        <li><strong>Владелец:</strong> неизвестен</li>
-                    {% endif %}
-                    {% if object.current_versions %}
-                        <li>{{ object.active_version }}, {{ object.number_version }}</li>
-                    {% else %}
-                        <li>{{ object.active_version }}</li>
-                    {% endif %}
-                </ul>
-
-                <div class="d-grid gap-2 col-6 mx-auto">
-                    <div class="btn-group">
-                        <a href="{% url 'catalog:product' object.pk %}" class="btn btn-success active"
-                           aria-current="page">Купить</a>
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <div class="card mb-4 mt-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="text-center">{{ object.name_products }}</h4>
                     </div>
-                    {% if user.is_superuser %}
-                        <div class="btn-group">
-                            <a href="{% url 'catalog:update_product' object.pk %}" class="btn btn-secondary active"
-                               aria-current="page">Редактировать</a>
-                        </div>
-                    {% else %}
-                        {% if user.is_staff %}
-                            {% if perms.catalog.set_published and perms.catalog.set_description and perms.catalog.set_category %}
-                            <div class="btn-group">
-                                <a href="{% url 'catalog:update_product' object.pk %}" class="btn btn-secondary active"
-                                   aria-current="page">Редактировать</a>
-                            </div>
+                    <div class="card-body">
+                        <h1 class="card-title text-center">{{ object.price }} рублей </h1>
+                        <ul class="list-unstyled text-center">
+                            <li>{{ object.description_products|truncatechars:100 }}</li>
+                            {% if object.user.email %}
+                                <li><strong>Владелец: </strong>{{ object.user.email}}</li>
+                            {% else %}
+                                <li><strong>Владелец: </strong> неизвестен</li>
                             {% endif %}
-                        {% endif %}
-                        {% if user.is_active %}
-                                {% if user.email == object.user.email %}
+
+                            {% if object.current_versions %}
+                                <li>{{ object.active_version }}, {{ object.number_version }}</li>
+                            {% else %}
+                                <li>{{ object.active_version }}</li>
+                            {% endif %}
+                        </ul>
+
+                        <div class="d-grid gap-2 col-6 mx-auto">
+                            <div class="btn-group">
+                                <a href="{% url 'catalog:product' object.pk %}" class="btn btn-success active"
+                                   aria-current="page">Купить</a>
+                            </div>
+                            {% if user.is_superuser %}
+                                <div class="btn-group">
+                                    <a href="{% url 'catalog:update_product' object.pk %}" class="btn btn-secondary active"
+                                       aria-current="page">Редактировать</a>
+                                </div>
+                            {% else %}
+                                {% if user.is_staff %}
+                                    {% if perms.catalog.set_published and perms.catalog.set_description and perms.catalog.set_category %}
                                     <div class="btn-group">
                                         <a href="{% url 'catalog:update_product' object.pk %}" class="btn btn-secondary active"
                                            aria-current="page">Редактировать</a>
                                     </div>
+                                    {% endif %}
                                 {% endif %}
+                                {% if user.is_active %}
+                                        {% if user.email == object.user.email %}
+                                            <div class="btn-group">
+                                                <a href="{% url 'catalog:update_product' object.pk %}" class="btn btn-secondary active"
+                                                   aria-current="page">Редактировать</a>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
                             {% endif %}
-                    {% endif %}
-                    {% if perms.catalog.delete_product %}
-                    <div class="btn-group">
-                        <a href="{% url 'catalog:delete_product' object.pk %}" class="btn btn-danger active"
-                           aria-current="page">Удалить</a>
+                            {% if perms.catalog.delete_product %}
+                            <div class="btn-group">
+                                <a href="{% url 'catalog:delete_product' object.pk %}" class="btn btn-danger active"
+                                   aria-current="page">Удалить</a>
+                            </div>
+                            {% endif %}
+                        </div>
                     </div>
-                    {% endif %}
                 </div>
             </div>
+            <div class="col-1"></div>
         </div>
     </div>
     {% endfor %}

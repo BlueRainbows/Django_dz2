@@ -10,17 +10,21 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
+from dotenv import load_dotenv
 from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=l)$(^nckmrfat5tf^wcqqor4v21_chzl4ta&iy@fu8%)g#*gf'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -80,9 +84,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'project_django_2',
-        'USER': 'postgres',
-        'PASSWORD': 'Ad.Dam'
+        'NAME': os.getenv('DATABASES_NAME'),
+        'USER': os.getenv('DATABASES_USER'),
+        'PASSWORD': os.getenv('DATABASES_PASSWORD')
     }
 }
 
@@ -141,10 +145,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # Автопереход урла при входе/выводе на корневой, определение модели для пользователя
 
-AUTH_USER_MODEL = 'users.User'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
-LOGIN_URL = 'users:login'
+AUTH_USER_MODEL = 'users.User' ### определение модели
+LOGIN_REDIRECT_URL = '/' ### редирект при входе
+LOGOUT_REDIRECT_URL = '/' ### редирект при выходе
+LOGIN_URL = 'users:login' ### редирект анонимного пользователя
 
 
 # Настройки подключения к почтовым рассылкам
@@ -156,10 +160,21 @@ EMAIL_USE_SSL = True
 # EMAIL_USE_TLS = True
 
 
-EMAIL_HOST_USER = 'BlueberryRainbows@yandex.ru' ### Почта с которой приизводиться рассылка
-EMAIL_HOST_PASSWORD = 'fxzxxvkijpyjbozb' ### Сгенирированный пароль
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER') ### Почта с которой приизводиться рассылка
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD') ### Сгенирированный пароль
 
 
 EMAIL_SERVER = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
+
+# Настройки кеширования
+CACHE_ENABLE = os.getenv('CACHE_ENABLE')
+
+# Подключение к redis
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": os.getenv('CACHES_LOCATION'),
+    }
+}

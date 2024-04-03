@@ -1,0 +1,39 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+{% include 'catalog/include/inc_text_skystore.html' %}
+<p class="lead">Skystore - это отличный вариант хранения ваших плагинов и примеров кода, который вы бы хотели
+    продать</p>
+</div>
+
+
+<div class="container">
+    <div class="col-12">
+        <div class="card-body">
+            <h1 class="card-title text-center mb-4"> Здесь вы можете посмотреть категории продуктов </h1>
+        </div>
+    </div>
+    {% for object in object_list %}
+        <div class="col-12">
+            <div class="row">
+                <div class="col-1"></div>
+                <div class="col-10">
+                    <div class="card mb-4 mt-4 box-shadow">
+                        <div class="card-header">
+                            <h4 class="text-center">{{ object.name_category }}</h4>
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title text-center">{{ object.description_category }}</h3>
+                            <div class="d-grid gap-2 col-6 mx-auto">
+                                <div class="btn-group mt-4">
+                                    <a href="{% url 'catalog:category' object.pk %}" class="btn btn-success active"
+                                       aria-current="page">Перейти</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1"></div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+
+{% include 'catalog/include/inc_text_skystore.html' %}
+</div>
+
+<div class="container">
+    <div class="row text-center">
+        <div class="col-12">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{ category }}</h1>
+                    <ul class="list-unstyled mt-3 mb-4 text-title m-3">
+                    {% for product in products%}
+                        <li>{{ product }}</li>
+                    {% endfor %}
+                    </ul>
+                    <a class="btn btn-success active" aria-current="page" href="/">Вернуться на страницу каталога</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
