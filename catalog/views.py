@@ -29,7 +29,7 @@ class CategoryListView(LoginRequiredMixin, ListView):
     Принимает модель Category.
     """
     model = Category
-    # template_name = 'catalog/category_list.html'
+    template_name = 'catalog/category_list.html'
 
     def get_queryset(self, *args, **kwargs):
         queryset = super().get_queryset(*args, **kwargs)
